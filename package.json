@@ -1,0 +1,27 @@
+{
+  "name": "elms-node-mailer",
+  "version": "1.0.0",
+  "description": "Email API Service for LMS App",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acharyarajasekhar/elms-node-mailer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/acharyarajasekhar/elms-node-mailer/issues"
+  },
+  "homepage": "https://github.com/acharyarajasekhar/elms-node-mailer#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-mailer": "^0.3.1",
+    "jade": "^1.11.0"
+  }
+}
