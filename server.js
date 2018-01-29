@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', function (req, res, next) {
-    res.sendFile(path.join(__dirname + "\\home.html"));
+    res.sendFile(path.join(__dirname + "/home.html"));
 });
 
 app.post('/requested', leavesCtrl.validate, leavesCtrl.requested, mailDispatcher);
