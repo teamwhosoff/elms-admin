@@ -22,6 +22,6 @@ app.post('/approved', leavesCtrl.validate, leavesCtrl.approved, mailDispatcher);
 app.post('/declined', leavesCtrl.validate, leavesCtrl.declined, mailDispatcher);
 app.post('/cancelled', leavesCtrl.validate, leavesCtrl.canceled, mailDispatcher);
 
-let server = app.listen(process.env.PORT | 8081, () => {
+let server = app.listen(process.env.PORT, () => {
     console.log("App listening at http://%s:%s", server.address().address, server.address().port);
 }); // taskkill /f /im node.exe
