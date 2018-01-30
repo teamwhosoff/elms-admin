@@ -84,7 +84,7 @@ module.exports.canceled = (req, res, next) => {
 
     const leave = req.body;
 
-    mailBodyRender.render('canceled', leave, (err) => { next(err) }, (content) => {
+    mailBodyRender.render('cancelled', leave, (err) => { next(err) }, (content) => {
         
         req.params.mailOptions = {
             from: process.env.GMAIL_ID,
