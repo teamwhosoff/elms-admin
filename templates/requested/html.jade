@@ -437,7 +437,7 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:v='urn:schemas-microsoft-com:vm
       /*@editable*/
       border-top: 0;
       /*@editable*/
-      border-bottom: 0px solid #EAEAEA;
+      /* border-bottom: 0px solid #EAEAEA; */
       /*@editable*/
       padding-top: 0;
       /*@editable*/
@@ -801,7 +801,6 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:v='urn:schemas-microsoft-com:vm
   body
     // *|IF:MC_PREVIEW_TEXT|*
     // [if !gte mso 9] <!
-    span.mcnPreviewText(style='display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;') *|MC_PREVIEW_TEXT|*
     // <![endif]
     // *|END:IF|*
     center
@@ -903,13 +902,13 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:v='urn:schemas-microsoft-com:vm
                                 tbody.mcnButtonBlockOuter
                                   tr
                                     td.mcnButtonBlockInner(style='padding-top:0; padding-right:18px; padding-bottom:0px; padding-left:18px;', valign='top', align='right')
-                                      table.mcnButtonContentContainer(border='0', cellpadding='0', cellspacing='0', style='border-collapse: separate !important;border-radius: 3px;background-color: #3AE0AC;')
+                                      table.mcnButtonContentContainer(border='0', cellpadding='0', cellspacing='0', style='border-collapse: separate !important;border-radius: 5px;-webkit-border-radius: 5px; -moz-border-radius: 5px; background-color: #3AE0AC;')
                                         tbody
                                           tr
                                             td.mcnButtonContent(align='center', valign='middle', style='font-family: Arial; font-size: 16px; padding: 15px;')
                                               a.mcnButton(title='Approve', href='https://github.com/acharyarajasekhar', target='_blank', style='font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;') Approve
                                     td.mcnButtonBlockInner(style='padding-top:0; padding-right:18px; padding-bottom:0px; padding-left:18px;', valign='top', align='left')
-                                      table.mcnButtonContentContainer(border='0', cellpadding='0', cellspacing='0', style='border-collapse: separate !important;border-radius: 3px;background-color: #E03A44;')
+                                      table.mcnButtonContentContainer(border='0', cellpadding='0', cellspacing='0', style='border-collapse: separate !important;-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;background-color: #E03A44;')
                                         tbody
                                           tr
                                             td.mcnButtonContent(align='center', valign='middle', style='font-family: Arial; font-size: 16px; padding: 15px;')
@@ -935,8 +934,8 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:v='urn:schemas-microsoft-com:vm
                                 span(style='font-size:16px')
                                   span(style='color:#c54a00') During this time,
                               ul
-                                li Acharya - 1st Jan 2018 to 5th Jan 2018
-                                li Nagappan - 5th Feb 2018 to 20th Feb 2018
+                              each item in #{DuringThisTime}
+                                li= item.Name - item.FromDTTM to item.ToDTTM
                   tr
                     td#templateFooter(valign='top')
               //if (gte mso 9)|(IE)
