@@ -934,8 +934,8 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:v='urn:schemas-microsoft-com:vm
                                 span(style='font-size:16px')
                                   span(style='color:#c54a00') During this time,
                               ul
-                              each item in #{DuringThisTime}
-                                li= item.Name - item.FromDTTM to item.ToDTTM
+                              each item in DuringThisTime.length ? DuringThisTime : ["No other leaves"]
+                                li= item
                   tr
                     td#templateFooter(valign='top')
               //if (gte mso 9)|(IE)
