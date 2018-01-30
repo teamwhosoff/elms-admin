@@ -32,8 +32,8 @@ module.exports.requested = (req, res, next) => {
         req.params.mailOptions = {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Manager.Email,
-            cc: leave.Owner.Email,
-            subject: 'LMS - New Leave Request',
+            //cc: leave.Owner.Email,
+            subject: 'Who''s Off - New Leave Request',
             html: content
         };
 
@@ -52,8 +52,8 @@ module.exports.approved = (req, res, next) => {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Email,
             cc: leave.Owner.Manager.Email,
-            subject: 'LMS - Leave Request Approved',
-            html: '<p>Your html here</p>'
+            subject: 'Who''s Off - Leave Request Approved',
+            html: content
         };
 
         next();
@@ -71,8 +71,8 @@ module.exports.declined = (req, res, next) => {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Email,
             cc: leave.Owner.Manager.Email,
-            subject: 'LMS - Leave Request Declined',
-            html: '<p>Your html here</p>'
+            subject: 'Who''s Off - Leave Request Declined',
+            html: content
         };
 
         next();
@@ -90,8 +90,8 @@ module.exports.canceled = (req, res, next) => {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Manager.Email,
             cc: leave.Owner.Email,
-            subject: 'LMS - Leave Request Cancelled',
-            html: '<p>Your html here</p>'
+            subject: 'Who''s Off - Leave Request Cancelled',
+            html: content
         };
 
         next();
