@@ -1,6 +1,10 @@
 var admin = require('firebase-admin');
 admin.initializeApp({
-  credential: admin.credential.cert(process.env.FIREBASE_CONFIG)
+    credential: admin.credential.cert({
+        "project_id": "ee-lms",
+        "private_key": process.env.FB_ADMIN_PRIVATE_KEY,
+        "client_email": process.env.FB_ADMIN_CLIENT_EMAIL
+    })
 });
 
 module.exports = (req, res, next) => {
