@@ -3,7 +3,7 @@ var EmailTemplate = require('email-templates').EmailTemplate;
 
 module.exports.render = (templateName, leave, onError, onSuccess) => {
 
-    var templateDir = path.join(__dirname, 'templates', templateName);
+    var templateDir = path.join(path.resolve(__dirname,"../email"), 'templates', templateName);
     var template = new EmailTemplate(templateDir);
 
     var leave = leave || {};
