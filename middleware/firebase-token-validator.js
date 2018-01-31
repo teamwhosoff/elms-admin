@@ -15,6 +15,7 @@ module.exports = (req, res, next) => {
                 console.log(decodedToken.uid);
                 next();
             }
+            next("Invalid security token...")
         }).catch(function(err) {
             next(err)
         });
