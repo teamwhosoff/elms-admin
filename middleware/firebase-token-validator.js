@@ -9,6 +9,9 @@ admin.initializeApp({
 
 module.exports = (req, res, next) => {
     var idToken = req.headers['fb-user-token'];
+    if(!idToken) {
+        return res.status(403).send("fb-user-token header is missing");
+    }
     console.log(idToken);
     admin.auth().verifyIdToken(idToken)
         .then(function(decodedToken) {
@@ -17,7 +20,6 @@ module.exports = (req, res, next) => {
                 next();
             }
             else {
-                console.log(err);
                 return res.status(403).send("Invalid Decoded Token");
             }
         }).catch(function(err) {
