@@ -8,7 +8,9 @@ const
     mailDispatcher = require('./middleware/mail-dispatcher'),
     homeCtrl = require("./home/home-controller"),
     emailValidationCtrl = require("./email/email-validation-controller"),
-    emailCtrl = require('./email/email-controller');
+    emailCtrl = require('./email/email-controller'),
+    leaveStatusChangeCtrl = require("./email/leave-statuschange-controller"),
+    duringThisTimeCtrl = require("./leave/during-this-time");
 
 const app = express();
 app.use(cors());
@@ -16,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', homeCtrl);
+app.get('/duringthistime/:leaveId', duringThisTimeCtrl);
 
 app.post('/requested', fbAuth, emailValidationCtrl.validate, emailCtrl.requested, mailDispatcher);
 app.post('/approved', fbAuth, emailValidationCtrl.validate, emailCtrl.approved, mailDispatcher);
