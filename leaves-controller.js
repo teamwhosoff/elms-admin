@@ -88,8 +88,8 @@ module.exports.canceled = (req, res, next) => {
         
         req.params.mailOptions = {
             from: process.env.GMAIL_ID,
-            to: leave.Owner.Manager.Email,
-            cc: leave.Owner.Email,
+            to: leave.Owner.Email,
+            cc: leave.Owner.Manager.Email,
             subject: "Who's Off - Leave Request Cancelled",
             html: content
         };
