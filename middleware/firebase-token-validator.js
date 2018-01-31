@@ -2,7 +2,7 @@ var admin = require('firebase-admin');
 admin.initializeApp({
     credential: admin.credential.cert({
         "project_id": "ee-lms",
-        "private_key": process.env.FB_ADMIN_PRIVATE_KEY,
+        "private_key": process.env.FB_ADMIN_PRIVATE_KEY.replace(/\\n/g, '\n'),
         "client_email": process.env.FB_ADMIN_CLIENT_EMAIL
     })
 });
