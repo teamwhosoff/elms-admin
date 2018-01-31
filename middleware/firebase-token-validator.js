@@ -9,14 +9,19 @@ admin.initializeApp({
 
 module.exports = (req, res, next) => {
     var idToken = req.headers['fb-user-token'];
+    console.log(idToken);
     admin.auth().verifyIdToken(idToken)
         .then(function(decodedToken) {
-            if (decodedToken.uid) {
-                console.log(decodedToken.uid);
+            console.log("Decoded Token: " + decodedToken);
+            if (decodedToken) {
                 next();
             }
-            next("Invalid security token...")
+            else {
+                console.log(err);
+                return res.status(403).send("Invalid Decoded Token");
+            }
         }).catch(function(err) {
-            next(err)
+            console.log(err);
+            return res.status(403).send("Invalid Token");
         });
 }
