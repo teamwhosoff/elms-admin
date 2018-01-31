@@ -4,6 +4,7 @@ const
     express = require('express'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
+    fbAuth = require('./middleware/firebase-token-validator'),
     mailDispatcher = require('./middleware/mail-dispatcher'),
     homeCtrl = require("./home/home-controller"),
     emailValidationCtrl = require("./email/email-validation-controller"),
@@ -16,10 +17,10 @@ app.use(bodyParser.json());
 
 app.get('/', homeCtrl);
 
-app.post('/requested', emailValidationCtrl.validate, emailCtrl.requested, mailDispatcher);
-app.post('/approved', emailValidationCtrl.validate, emailCtrl.approved, mailDispatcher);
-app.post('/declined', emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher);
-app.post('/cancelled', emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher);
+app.post('/requested', fbAuth, emailValidationCtrl.validate, emailCtrl.requested, mailDispatcher);
+app.post('/approved', fbAuth, emailValidationCtrl.validate, emailCtrl.approved, mailDispatcher);
+app.post('/declined', fbAuth, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher);
+app.post('/cancelled', fbAuth, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher);
 
 let server = app.listen(process.env.PORT, () => {
     console.log("App listening at http://%s:%s", server.address().address, server.address().port);

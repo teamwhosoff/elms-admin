@@ -4,7 +4,7 @@
   "description": "Email API Service for LMS App",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +23,7 @@
     "email-templates": "^2.7.1",
     "express": "^4.16.2",
     "express-mailer": "^0.3.1",
+    "firebase-admin": "^5.8.2",
     "jade": "^1.11.0",
     "nodemailer": "^4.4.2"
   },
