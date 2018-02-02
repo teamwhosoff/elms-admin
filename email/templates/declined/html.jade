@@ -131,7 +131,7 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:v='urn:schemas-microsoft-com:vm
       body,
       #bodyTable {
       /*@editable*/
-      background-color: #464646;
+      background-color: #eeeeee;
       }
       /*
       @tab Page
@@ -815,8 +815,10 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:v='urn:schemas-microsoft-com:vm
                     td(align='center', valign='top', width='600', style='width:600px;')
               table.templateContainer(border='0', cellpadding='0', cellspacing='0', width='100%')
                 tbody
-                  tr
-                    td#templatePreheader(valign='top')
+                  //
+                    <tr>
+                    <td valign="top" id="templatePreheader"></td>
+                    </tr>
                   tr
                     td#templateHeader(valign='top')
                       table.mcnBoxedTextBlock(border='0', cellpadding='0', cellspacing='0', width='100%', style='min-width:100%;')
@@ -900,11 +902,11 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:v='urn:schemas-microsoft-com:vm
                                 tbody.mcnButtonBlockOuter
                                   tr
                                     td.mcnButtonBlockInner(style='padding-top:0; padding-right:18px; padding-bottom:0px; padding-left:18px;', valign='top', align='center')
-                                      table.mcnButtonContentContainer(border='0', cellpadding='0', cellspacing='0', style='border-collapse: separate !important;-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;background-color: #E03A44;')
+                                      table.mcnButtonContentContainer(border='0', cellpadding='0', cellspacing='0', style='border-collapse: separate !important;border-radius: 5px;-webkit-border-radius: 5px; -moz-border-radius: 5px; background-color: #E03A44;')
                                         tbody
                                           tr
                                             td.mcnButtonContent(align='center', valign='middle', style='font-family: Arial; font-size: 16px; padding: 15px;')
-                                              a.mcnButton(title='Decline', href='https://github.com/acharyarajasekhar', target='_blank', style='font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;') Declined
+                                              span.mcnButton(style='font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;') Declined
                       //if (gte mso 9)|(IE)
                       table.mcnDividerBlock(border='0', cellpadding='0', cellspacing='0', width='100%', style='min-width:100%;')
                         tbody.mcnDividerBlockOuter
