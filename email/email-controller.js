@@ -3,9 +3,9 @@ var mailBodyRender = require('../middleware/mail-body-render');
 
 module.exports.requested = (req, res, next) => {
 
-    const leave = req.body;
+    const leave = req.Leave;
 
-    if (leave.Owner.Email != req.userInContext.email) {
+    if (req.userInContext != null && leave.Owner.Email != req.userInContext.email) {
         return res.status(403).send("You are not authorized user for this leave object");
     }
 
@@ -14,7 +14,7 @@ module.exports.requested = (req, res, next) => {
         req.params.mailOptions = {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Manager.Email,
-            //cc: leave.Owner.Email,
+            cc: leave.Owner.Email,
             subject: "Who's Off - New Leave Request",
             html: content
         };
@@ -26,9 +26,9 @@ module.exports.requested = (req, res, next) => {
 
 module.exports.approved = (req, res, next) => {
 
-    const leave = req.body;
+    const leave = req.Leave;
 
-    if (leave.Owner.Manager.Email != req.userInContext.email) {
+    if (req.userInContext != null && leave.Owner.Manager.Email != req.userInContext.email) {
         return res.status(403).send("You are not authorized user for this leave object");
     }
 
@@ -49,9 +49,9 @@ module.exports.approved = (req, res, next) => {
 
 module.exports.declined = (req, res, next) => {
 
-    const leave = req.body;
+    const leave = req.Leave;
 
-    if (leave.Owner.Manager.Email != req.userInContext.email) {
+    if (req.userInContext != null && leave.Owner.Manager.Email != req.userInContext.email) {
         return res.status(403).send("You are not authorized user for this leave object");
     }
 
@@ -72,9 +72,9 @@ module.exports.declined = (req, res, next) => {
 
 module.exports.canceled = (req, res, next) => {
 
-    const leave = req.body;
+    const leave = req.Leave;
 
-    if (leave.Owner.Email != req.userInContext.email) {
+    if (req.userInContext != null && leave.Owner.Email != req.userInContext.email) {
         return res.status(403).send("You are not authorized user for this leave object");
     }
 

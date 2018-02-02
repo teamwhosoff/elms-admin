@@ -12,12 +12,20 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-module.exports = (req, res, next) => {
-    transporter.sendMail(req.params.mailOptions, function (err, info) {
+module.exports.dispatch = (req, res) => {
+    //console.log(req.params.mailOptions);
+    transporter.sendMail(req.params.mailOptions, function(err, info) {
         if (err) {
-            next(err)
+            console.log(err);
+            res.status(500).send(err);
         }
-        else
-            return res.status(200).send(info);
+        else {
+            console.log(info);
+            res.status(200).send(info);
+        }
     });
 };
+
+module.exports.finish = (req, res) => {
+    console.log("Done");
+}

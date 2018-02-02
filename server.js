@@ -18,12 +18,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', homeCtrl);
-app.get('/duringthistime/:leaveId', leaveCtrl);
+app.get('/duringthistime', verifyIdToken, leaveCtrl.duringthistime);
 
-app.post('/requested', verifyIdToken, emailValidationCtrl.validate, emailCtrl.requested, mailDispatcher);
-app.post('/approved', verifyIdToken, emailValidationCtrl.validate, emailCtrl.approved, mailDispatcher);
-app.post('/declined', verifyIdToken, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher);
-app.post('/cancelled', verifyIdToken, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher);
+app.get('/requested', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.requested, mailDispatcher.dispatch, mailDispatcher.finish);
+app.get('/approved', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.approved, mailDispatcher.dispatch, mailDispatcher.finish);
+app.get('/declined', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher.dispatch, mailDispatcher.finish);
+app.get('/cancelled', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher.dispatch, mailDispatcher.finish);
 
 let server = app.listen(process.env.PORT, () => {
     console.log("App listening at http://%s:%s", server.address().address, server.address().port);

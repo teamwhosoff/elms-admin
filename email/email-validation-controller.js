@@ -2,22 +2,22 @@
 
 module.exports.validate = (req, res, next) => {
 
-    const leave = req.body;
+    const leave = req.Leave;
 
     if (!leave) {
-        next("Leave object is missing");
+        return res.status(500).send("Leave object is missing");
     }
     if (!leave.FromDTTM || !leave.ToDTTM) {
-        next("FromDTTM or ToDTTM of leave object is missing");
+        return res.status(500).send("FromDTTM or ToDTTM of leave object is missing");
     }
     if (!leave.Comments) {
-        next("Comments of leave object is missing");
+        return res.status(500).send("Comments of leave object is missing");
     }
     if (!leave.Owner || !leave.Owner.Name || !leave.Owner.Email) {
-        next("Owner details in leave object is missing");
+        return res.status(500).send("Owner details in leave object is missing");
     }
     if (!leave.Owner.Manager || !leave.Owner.Manager.Name || !leave.Owner.Manager.Email) {
-        next("Manager details in leave owner object is missing");
+        return res.status(500).send("Manager details in leave owner object is missing");
     }
     next();
 }
