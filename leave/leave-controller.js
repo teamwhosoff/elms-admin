@@ -28,13 +28,29 @@ module.exports.duringthistime = (req, res, next) => {
                                 "Email": leave.owner.manager.email
                             }
                         },
-                        "DuringThisTime": []
+                        "DuringThisTime": [],
+                        "NoOfDays": (moment(leave.to).diff(moment(leave.from), 'days') + 1) + ' days'
                     }
+
+                    console.log("hello");
+
+                    if (leave.isHalfDay) {
+                        Leave.NoOfDays = "half day"
+                    } else {
+                        var noof = (moment(leave.to).diff(moment(leave.from), 'days') + 1);
+                        if (noof == 1) {
+                            Leave.NoOfDays = "one day";
+                        } else if (noof > 1) {
+                            Leave.NoOfDays = noof + " days";
+                        }
+                    }
+
+                    console.log("hello");
 
                     store.collection("eUsers").where("manager", "==", store.doc("eUsers/" + leave.owner.manager.email)).where("team", "==", leave.owner.team).get().then(userCollection => {
                         userCollection.docs.forEach((emp, empIndex, empItems) => {
                             var employee = emp.data();
-                            if (leave.owner.email == employee.email) { return res.send(Leave); }
+                            if (leave.owner.email == employee.email) { console.log(Leave); return res.send(Leave); }
                             //console.log(employee.email + " --- " + leave.owner.email + " --- " + leave.owner.manager.email);
                             store.collection("eLeaves").where("owner", "==", emp.ref).where("to", ">=", leave.from).get().then(leavesResult => {
                                 leavesResult.docs.forEach((otherLeave, index, items) => {
@@ -45,7 +61,7 @@ module.exports.duringthistime = (req, res, next) => {
                                         Leave.DuringThisTime.push(employee.name + " : " + moment(otherLeave.from).format('MMM Do') + " - " + moment(otherLeave.to).format('MMM Do, YYYY'))
                                     }
                                     if ((index == items.length - 1) && (empIndex == empItems.length - 1)) {
-                                        return res.send(Leave);
+                                        console.log(Leave);return res.send(Leave);
                                     }
                                 });
                             });
