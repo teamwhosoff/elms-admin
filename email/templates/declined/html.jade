@@ -482,7 +482,7 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:v='urn:schemas-microsoft-com:vm
       */
       #templateFooter {
       /*@editable*/
-      background-color: #FAFAFA;
+      background-color: #0068A5;
       /*@editable*/
       background-image: none;
       /*@editable*/
@@ -863,7 +863,9 @@ html(xmlns='http://www.w3.org/1999/xhtml', xmlns:v='urn:schemas-microsoft-com:vm
                                           | ,
                                       p(style='text-align: center;')
                                         span(style='font-size:14px')
-                                          | Your leave request (
+                                          | Your 
+                                          span(style='color:#008000')  #{NoOfDays ? ('(' + NoOfDays + ')') : ''}
+                                          |  leave request (
                                           span(style='color:#008000')  #{FromDTTM}
                                           |  -
                                           span(style='color:#008000')  #{ToDTTM}

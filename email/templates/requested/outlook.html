@@ -550,7 +550,7 @@
 
 		#templateFooter {
 			/*@editable*/
-			background-color: #FAFAFA;
+			background-color: #0068A5;
 			/*@editable*/
 			background-image: none;
 			/*@editable*/
@@ -998,7 +998,7 @@
 																			</p>
 
 																		<p style="text-align: center;">
-																			<span style="font-size:14px">A new leave request is initiated by
+																			<span style="font-size:14px">A new <span style="color:#008000"> #{NoOfDays ? ('(' + NoOfDays + ')') : ''}</span> leave request is initiated by
 																				<span style="color:#0000CD"> #{Owner.Name}</span>
 																				<br> from
 																				<span style="color:#008000"> #{FromDTTM}</span> to
