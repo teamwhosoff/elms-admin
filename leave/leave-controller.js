@@ -1,4 +1,5 @@
 var moment = require('moment');
+var moment1 = require("moment-weekday-calc");
 var admin = require('firebase-admin');
 var store = admin.firestore();
 
@@ -45,7 +46,7 @@ module.exports.duringthistime = (req, res, next) => {
                         }
                     }
 
-                    console.log("hello");
+                    console.log(moment1().weekdayCalc(leave.from, leave.to, [0,1,2,3,4,5,6]));
 
                     store.collection("eUsers").where("manager", "==", store.doc("eUsers/" + leave.owner.manager.email)).where("team", "==", leave.owner.team).get().then(userCollection => {
                         userCollection.docs.forEach((emp, empIndex, empItems) => {
@@ -102,7 +103,19 @@ module.exports.getLeaveByID = (req, res, next) => {
                                 "Email": leave.owner.manager.email
                             }
                         },
-                        "DuringThisTime": []
+                        "DuringThisTime": [],
+                        "NoOfDays": (moment(leave.to).diff(moment(leave.from), 'days') + 1) + ' days'
+                    }
+
+                    if (leave.isHalfDay) {
+                        Leave.NoOfDays = "half day"
+                    } else {
+                        var noof = (moment(leave.to).diff(moment(leave.from), 'days') + 1);
+                        if (noof == 1) {
+                            Leave.NoOfDays = "one day";
+                        } else if (noof > 1) {
+                            Leave.NoOfDays = noof + " days";
+                        }
                     }
 
                     store.collection("eUsers").where("manager", "==", store.doc("eUsers/" + leave.owner.manager.email)).where("team", "==", leave.owner.team).get().then(userCollection => {
