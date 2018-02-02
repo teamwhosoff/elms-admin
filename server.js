@@ -25,6 +25,6 @@ app.get('/approved', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.
 app.get('/declined', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher.dispatch, mailDispatcher.finish);
 app.get('/cancelled', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher.dispatch, mailDispatcher.finish);
 
-let server = app.listen(process.env.PORT, () => {
+let server = app.listen(8081, () => {
     console.log("App listening at http://%s:%s", server.address().address, server.address().port);
 }); // taskkill /f /im node.exe
