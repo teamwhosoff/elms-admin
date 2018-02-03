@@ -12,12 +12,12 @@ module.exports = (req, res, next) => {
     return next();
 
     var idToken = req.headers['fb-user-token'];
-    if(!idToken) {
+    if (!idToken) {
         return res.status(403).send("fb-user-token header is missing");
     }
     console.log(idToken);
     admin.auth().verifyIdToken(idToken)
-        .then(function(decodedToken) {
+        .then(function (decodedToken) {
             console.log("Decoded Token: " + JSON.stringify(decodedToken));
             if (decodedToken) {
                 req.userInContext = decodedToken;
@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
             else {
                 return res.status(403).send("Invalid Decoded Token");
             }
-        }).catch(function(err) {
+        }).catch(function (err) {
             console.log(err);
             return res.status(403).send("Invalid Token");
         });

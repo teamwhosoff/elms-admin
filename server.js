@@ -5,6 +5,7 @@ const
     bodyParser = require('body-parser'),
     cors = require('cors'),
     verifyIdToken = require('./middleware/firebase-token-validator'),
+    isAdmin = require("./middleware/is-admin"),
     mailDispatcher = require('./middleware/mail-dispatcher'),
     homeCtrl = require("./home/home-controller"),
     emailValidationCtrl = require("./email/email-validation-controller"),
@@ -28,17 +29,17 @@ app.post('/email/trigger/approved', verifyIdToken, leaveCtrl.getLeaveByID, email
 app.post('/email/trigger/declined', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher.dispatch, mailDispatcher.finish);
 app.post('/email/trigger/cancelled', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher.dispatch, mailDispatcher.finish);
 
-app.get('/accounts', accountsCtrl.getListOfUsers);
-app.get('/accounts/:key/:value', accountsCtrl.getUser);
-app.post('/accounts', accountsCtrl.createUsers);
-app.put('/accounts', accountsCtrl.updateUsers);
-app.delete('/accounts', accountsCtrl.deleteUsers);
+app.get('/accounts', verifyIdToken, isAdmin, accountsCtrl.getListOfUsers);
+app.get('/accounts/:key/:value', verifyIdToken, isAdmin, accountsCtrl.getUser);
+app.post('/accounts', verifyIdToken, isAdmin, accountsCtrl.createUsers);
+app.put('/accounts', verifyIdToken, isAdmin, accountsCtrl.updateUsers);
+app.delete('/accounts', verifyIdToken, isAdmin, accountsCtrl.deleteUsers);
 
-app.get('/teams', teamsCtrl.export);
-app.post('/teams', teamsCtrl.import);
+app.get('/teams', verifyIdToken, isAdmin, teamsCtrl.export);
+app.post('/teams', verifyIdToken, isAdmin, teamsCtrl.import);
 
-app.get('/users', usersCtrl.export);
-app.post('/users', usersCtrl.import);
+app.get('/users', verifyIdToken, isAdmin, usersCtrl.export);
+app.post('/users', verifyIdToken, isAdmin, usersCtrl.import);
 
 let server = app.listen(8081, () => {
     console.log("App listening at http://%s:%s", server.address().address, server.address().port);
