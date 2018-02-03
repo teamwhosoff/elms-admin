@@ -46,7 +46,7 @@ module.exports.duringthistime = (req, res, next) => {
                         }
                     }
 
-                    console.log(moment1().weekdayCalc(leave.from, leave.to, [0,1,2,3,4,5,6]));
+                    console.log(moment1().weekdayCalc(leave.from, leave.to, [0, 1, 2, 3, 4, 5, 6]));
 
                     store.collection("eUsers").where("manager", "==", store.doc("eUsers/" + leave.owner.manager.email)).where("team", "==", leave.owner.team).get().then(userCollection => {
                         userCollection.docs.forEach((emp, empIndex, empItems) => {
@@ -62,7 +62,7 @@ module.exports.duringthistime = (req, res, next) => {
                                         Leave.DuringThisTime.push(employee.name + " : " + moment(otherLeave.from).format('MMM Do') + " - " + moment(otherLeave.to).format('MMM Do, YYYY'))
                                     }
                                     if ((index == items.length - 1) && (empIndex == empItems.length - 1)) {
-                                        console.log(Leave);return res.send(Leave);
+                                        console.log(Leave); return res.send(Leave);
                                     }
                                 });
                             });
@@ -104,19 +104,20 @@ module.exports.getLeaveByID = (req, res, next) => {
                             }
                         },
                         "DuringThisTime": [],
-                        "NoOfDays": (moment(leave.to).diff(moment(leave.from), 'days') + 1) + ' days'
+                        "NoOfDays": ''
                     }
 
                     if (leave.isHalfDay) {
                         Leave.NoOfDays = "half day"
-                    } else {
-                        var noof = (moment(leave.to).diff(moment(leave.from), 'days') + 1);
-                        if (noof == 1) {
-                            Leave.NoOfDays = "one day";
-                        } else if (noof > 1) {
-                            Leave.NoOfDays = noof + " days";
-                        }
                     }
+                    // else {
+                    //     var noof = (moment(leave.to).diff(moment(leave.from), 'days') + 1);
+                    //     if (noof == 1) {
+                    //         Leave.NoOfDays = "one day";
+                    //     } else if (noof > 1) {
+                    //         Leave.NoOfDays = noof + " days";
+                    //     }
+                    // }
 
                     store.collection("eUsers").where("manager", "==", store.doc("eUsers/" + leave.owner.manager.email)).where("team", "==", leave.owner.team).get().then(userCollection => {
                         userCollection.docs.forEach((emp, empIndex, empItems) => {
