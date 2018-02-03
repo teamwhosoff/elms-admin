@@ -46,7 +46,7 @@ module.exports.duringthistime = (req, res, next) => {
                         }
                     }
 
-                    console.log(moment1().weekdayCalc(leave.from, leave.to, [0, 1, 2, 3, 4, 5, 6]));
+                    // console.log(moment1().weekdayCalc(leave.from, leave.to, [0, 1, 2, 3, 4, 5, 6]));
 
                     store.collection("eUsers").where("manager", "==", store.doc("eUsers/" + leave.owner.manager.email)).where("team", "==", leave.owner.team).get().then(userCollection => {
                         userCollection.docs.forEach((emp, empIndex, empItems) => {
