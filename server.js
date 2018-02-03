@@ -11,7 +11,8 @@ const
     emailCtrl = require('./email/email-controller'),
     leaveStatusChangeCtrl = require("./email/leave-statuschange-controller"),
     leaveCtrl = require("./leave/leave-controller"),
-    accountsCtrl = require("./accounts/user-accounts-controller");
+    accountsCtrl = require("./accounts/user-accounts-controller"),
+    teamsCtrl = require("./team/team-controller");
 
 const app = express();
 app.use(cors());
@@ -31,6 +32,9 @@ app.get('/accounts/:key/:value', accountsCtrl.getUser);
 app.post('/accounts', accountsCtrl.createUsers);
 app.put('/accounts', accountsCtrl.updateUsers);
 app.delete('/accounts', accountsCtrl.deleteUsers);
+
+app.get('/teams', teamsCtrl.export);
+app.post('/teams', teamsCtrl.import);
 
 let server = app.listen(8081, () => {
     console.log("App listening at http://%s:%s", server.address().address, server.address().port);
