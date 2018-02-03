@@ -41,6 +41,6 @@ app.post('/teams', verifyIdToken, isAdmin, teamsCtrl.import);
 app.get('/users', verifyIdToken, isAdmin, usersCtrl.export);
 app.post('/users', verifyIdToken, isAdmin, usersCtrl.import);
 
-let server = app.listen(8081, () => {
+let server = app.listen(process.env.PORT, () => {
     console.log("App listening at http://%s:%s", server.address().address, server.address().port);
 }); // taskkill /f /im node.exe
