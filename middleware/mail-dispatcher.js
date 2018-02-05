@@ -35,3 +35,7 @@ module.exports.dispatch = (req, res) => {
 module.exports.finish = (req, res) => {
     console.log("Done");
 }
+
+module.exports.adminFinish = (req, res) => {
+    console.log("Done");
+}

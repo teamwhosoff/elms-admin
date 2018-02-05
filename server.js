@@ -10,7 +10,7 @@ const
     homeCtrl = require("./home/home-controller"),
     emailValidationCtrl = require("./email/email-validation-controller"),
     emailCtrl = require('./email/email-controller'),
-    leaveStatusChangeCtrl = require("./email/leave-statuschange-controller"),
+    leaveStatusChangeCtrl = require("./leave/leave-status-controller"),
     leaveCtrl = require("./leave/leave-controller"),
     accountsCtrl = require("./accounts/user-accounts-controller"),
     teamsCtrl = require("./team/team-controller"),
@@ -22,12 +22,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', homeCtrl);
+app.get('/success', (req, res) => { res.send("Success"); })
 app.get('/duringthistime', verifyIdToken, leaveCtrl.duringthistime);
 
 app.post('/email/trigger/requested', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.requested, mailDispatcher.dispatch, mailDispatcher.finish);
 app.post('/email/trigger/approved', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.approved, mailDispatcher.dispatch, mailDispatcher.finish);
 app.post('/email/trigger/declined', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher.dispatch, mailDispatcher.finish);
 app.post('/email/trigger/cancelled', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher.dispatch, mailDispatcher.finish);
+
+app.get('/leave/:leaveId/status/:status/otp/:otp', leaveStatusChangeCtrl, emailCtrl.admin, mailDispatcher.dispatch, mailDispatcher.adminFinish);
 
 app.get('/accounts', verifyIdToken, isAdmin, accountsCtrl.getListOfUsers);
 app.get('/accounts/:key/:value', verifyIdToken, isAdmin, accountsCtrl.getUser);

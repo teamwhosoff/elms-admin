@@ -100,3 +100,26 @@ module.exports.canceled = (req, res, next) => {
     });
 
 }
+
+
+module.exports.admin = (req, res, next) => {
+
+    const leave = req.Leave;
+    const status = req.leaveStatus;
+
+    mailBodyRender.render(status, leave, (err) => { next(err) }, (content) => {
+
+        req.params.mailOptions = {
+            from: process.env.GMAIL_ID,
+            to: leave.Owner.Email,
+            cc: leave.Owner.Manager.Email,
+            subject: "Who's Off - Leave Request ",
+            html: content
+        };
+        
+        req.params.mailOptions.subject += status == "approved" ? "Approved" : "Declined";
+
+        next();
+    });
+
+}
