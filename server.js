@@ -36,7 +36,7 @@ app.get('/accounts', verifyIdToken, isAdmin, accountsCtrl.getListOfUsers);
 app.get('/accounts/:key/:value', verifyIdToken, isAdmin, accountsCtrl.getUser);
 app.post('/accounts', verifyIdToken, isAdmin, accountsCtrl.createUsers);
 app.put('/accounts', verifyIdToken, isAdmin, accountsCtrl.updateUsers);
-app.delete('/accounts', verifyIdToken, isAdmin, accountsCtrl.deleteUsers);
+app.delete('/accounts', verifyIdToken, isAdmin, accountsCtrl.deleteAll);
 
 app.get('/teams', verifyIdToken, isAdmin, teamsCtrl.export);
 app.post('/teams', verifyIdToken, isAdmin, teamsCtrl.import);

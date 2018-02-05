@@ -94,3 +94,19 @@ module.exports.deleteUsers = (req, res) => {
             });
     });
 }
+
+module.exports.deleteAll = (req, res) => {
+    var users = req.body;
+    users.forEach((user, i, arr) => {
+        admin.auth().deleteUser(user.uid)
+            .then(() => {
+                if(i == arr.length - 1) {
+                    res.send("Success");
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).send(err.toJSON())
+            });
+    });
+}
