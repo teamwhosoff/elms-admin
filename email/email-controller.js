@@ -5,8 +5,10 @@ module.exports.requested = (req, res, next) => {
 
     const leave = req.Leave;
 
-    if (req.userInContext != null && leave.Owner.Email != req.userInContext.email) {
-        return res.status(403).send("You are not authorized user for this leave object");
+    if (req.userInContext != null && req.userInContext.email != process.env.ADMIN_EMAIL) {
+        if (leave.Owner.Email != req.userInContext.email) {
+            return res.status(403).send("You are not authorized user for this leave object");
+        }
     }
 
     mailBodyRender.render('requested', leave, (err) => { next(err) }, (content) => {
@@ -28,8 +30,10 @@ module.exports.approved = (req, res, next) => {
 
     const leave = req.Leave;
 
-    if (req.userInContext != null && leave.Owner.Manager.Email != req.userInContext.email) {
-        return res.status(403).send("You are not authorized user for this leave object");
+    if (req.userInContext != null && req.userInContext.email != process.env.ADMIN_EMAIL) {
+        if (leave.Owner.Manager.Email != req.userInContext.email) {
+            return res.status(403).send("You are not authorized user for this leave object");
+        }
     }
 
     mailBodyRender.render('approved', leave, (err) => { next(err) }, (content) => {
@@ -51,8 +55,10 @@ module.exports.declined = (req, res, next) => {
 
     const leave = req.Leave;
 
-    if (req.userInContext != null && leave.Owner.Manager.Email != req.userInContext.email) {
-        return res.status(403).send("You are not authorized user for this leave object");
+    if (req.userInContext != null && req.userInContext.email != process.env.ADMIN_EMAIL) {
+        if (leave.Owner.Manager.Email != req.userInContext.email) {
+            return res.status(403).send("You are not authorized user for this leave object");
+        }
     }
 
     mailBodyRender.render('declined', leave, (err) => { next(err) }, (content) => {
@@ -74,8 +80,10 @@ module.exports.canceled = (req, res, next) => {
 
     const leave = req.Leave;
 
-    if (req.userInContext != null && leave.Owner.Email != req.userInContext.email) {
-        return res.status(403).send("You are not authorized user for this leave object");
+    if (req.userInContext != null && req.userInContext.email != process.env.ADMIN_EMAIL) {
+        if (leave.Owner.Email != req.userInContext.email) {
+            return res.status(403).send("You are not authorized user for this leave object");
+        }
     }
 
     mailBodyRender.render('cancelled', leave, (err) => { next(err) }, (content) => {

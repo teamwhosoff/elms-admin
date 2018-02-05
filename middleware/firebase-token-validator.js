@@ -9,16 +9,16 @@ admin.initializeApp({
 
 module.exports = (req, res, next) => {
 
-    return next();
+    // return next();
 
     var idToken = req.headers['fb-user-token'];
     if (!idToken) {
         return res.status(403).send("fb-user-token header is missing");
     }
-    console.log(idToken);
+    // console.log(idToken);
     admin.auth().verifyIdToken(idToken)
         .then(function (decodedToken) {
-            console.log("Decoded Token: " + JSON.stringify(decodedToken));
+            // console.log("Decoded Token: " + JSON.stringify(decodedToken));
             if (decodedToken) {
                 req.userInContext = decodedToken;
                 next();

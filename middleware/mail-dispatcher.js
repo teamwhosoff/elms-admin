@@ -13,17 +13,23 @@ const transporter = nodemailer.createTransport({
 });
 
 module.exports.dispatch = (req, res) => {
-    //console.log(req.params.mailOptions);
-    transporter.sendMail(req.params.mailOptions, function(err, info) {
-        if (err) {
-            console.log(err);
-            res.status(500).send(err);
-        }
-        else {
-            console.log(info);
-            res.status(200).send(info);
-        }
-    });
+
+    if (req.params.mailOptions) {
+        //console.log(req.params.mailOptions);
+        transporter.sendMail(req.params.mailOptions, function(err, info) {
+            if (err) {
+                console.log(err);
+                res.status(500).send(err);
+            }
+            else {
+                console.log(info);
+                res.status(200).send(info);
+            }
+        });
+    }
+    else {
+        console.log("Mail skipped");
+    }
 };
 
 module.exports.finish = (req, res) => {
