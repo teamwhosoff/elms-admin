@@ -1,7 +1,7 @@
 var admin = require('firebase-admin');
 var store = admin.firestore();
 var crypto = require("crypto");
-var moment = require('moment');
+const moment = require('moment-timezone');
 
 function getNewOTP(leaveId) {
     var otp = crypto.randomBytes(64).toString('hex');
@@ -38,8 +38,8 @@ module.exports = (req, res, next) => {
                         owner.manager = manager.data();
                         leave.owner = owner;
                         var Leave = {
-                            "ToDTTM": moment(leave.to).format('MMM Do, YYYY'),
-                            "FromDTTM": moment(leave.from).format('MMM Do'),
+                            "ToDTTM": moment(leave.to).tz('Asia/Kolkata').format('MMM Do, YYYY'),
+                            "FromDTTM": moment(leave.from).tz('Asia/Kolkata').format('MMM Do'),
                             "Comments": leave.reason,
                             "Owner": {
                                 "Name": leave.owner.name,
@@ -58,7 +58,7 @@ module.exports = (req, res, next) => {
                         Leave.APPROVE_URL = process.env.API_BASE_URL + "/leave/" + req.query.leaveId + "/status/approve/otp/" + leave.otp;
                         Leave.DECLINE_URL = process.env.API_BASE_URL + "/leave/" + req.query.leaveId + "/status/decline/otp/" + leave.otp;
 
-                        // console.log(Leave);
+                        console.log(Leave);
 
                         switch (leave.status) {
                             case 0:

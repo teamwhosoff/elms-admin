@@ -1,4 +1,4 @@
-var moment = require('moment');
+const moment = require('moment-timezone');
 // var moment1 = require("moment-weekday-calc");
 var admin = require('firebase-admin');
 var store = admin.firestore();
@@ -34,7 +34,7 @@ module.exports.duringthistime = (req, res, next) => {
                         "NoOfDays": (moment(leave.to).diff(moment(leave.from), 'days') + 1) + ' days'
                     }
 
-                    console.log("hello");
+                    console.log(Leave);
 
                     if (leave.isHalfDay) {
                         Leave.NoOfDays = "half day"
@@ -102,8 +102,8 @@ module.exports.getLeaveByID = (req, res, next) => {
                     owner.manager = manager.data();
                     leave.owner = owner;
                     var Leave = {
-                        "ToDTTM": moment(leave.to).format('MMM Do, YYYY'),
-                        "FromDTTM": moment(leave.from).format('MMM Do'),
+                        "ToDTTM": moment(leave.to).tz('Asia/Kolkata').format('MMM Do, YYYY'),
+                        "FromDTTM": moment(leave.from).tz('Asia/Kolkata').format('MMM Do'),
                         "Comments": leave.reason,
                         "Owner": {
                             "Name": leave.owner.name,
@@ -122,7 +122,7 @@ module.exports.getLeaveByID = (req, res, next) => {
                     Leave.APPROVE_URL = process.env.API_BASE_URL + "/leave/" + req.query.leaveId  + "/status/approve/otp/" + leave.otp;
                     Leave.DECLINE_URL = process.env.API_BASE_URL + "/leave/" + req.query.leaveId  + "/status/decline/otp/" + leave.otp;
 
-                    // console.log(Leave);
+                    console.log(Leave);
 
                     switch (leave.status) {
                         case 0: {
