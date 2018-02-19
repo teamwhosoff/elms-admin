@@ -17,7 +17,7 @@ module.exports.requested = (req, res, next) => {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Manager.Email,
             //cc: leave.Owner.Email,
-            subject: "Who's Off - New Leave Request",
+            subject: "WhosOff - New Leave Request",
             html: content
         };
 
@@ -67,7 +67,7 @@ module.exports.declined = (req, res, next) => {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Email,
             cc: leave.Owner.Manager.Email,
-            subject: "Who's Off - Leave Request Declined",
+            subject: "WhosOff - Leave Request Declined",
             html: content
         };
 
@@ -92,7 +92,7 @@ module.exports.canceled = (req, res, next) => {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Email,
             cc: leave.Owner.Manager.Email,
-            subject: "Who's Off - Leave Request Cancelled",
+            subject: "WhosOff - Leave Request Cancelled",
             html: content
         };
 
@@ -113,7 +113,7 @@ module.exports.admin = (req, res, next) => {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Email,
             cc: leave.Owner.Manager.Email,
-            subject: "Who's Off - Leave Request ",
+            subject: "WhosOff - Leave Request ",
             html: content
         };
         
