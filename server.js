@@ -30,7 +30,7 @@ app.post('/email/trigger/approved', verifyIdToken, leaveCtrl.getLeaveByID, email
 app.post('/email/trigger/declined', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher.dispatch, mailDispatcher.finish);
 app.post('/email/trigger/cancelled', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher.dispatch, mailDispatcher.finish);
 
-app.get('/leave/:leaveId/status/:status/otp/:otp', leaveStatusChangeCtrl, emailCtrl.admin, mailDispatcher.dispatch, mailDispatcher.adminFinish);
+app.get('/leave/:leaveId/status/:status/otp/:otp', leaveStatusChangeCtrl, emailCtrl.admin, mailDispatcher.dispatchPage, mailDispatcher.adminFinish);
 
 app.get('/accounts', verifyIdToken, isAdmin, accountsCtrl.getListOfUsers);
 app.get('/accounts/:key/:value', verifyIdToken, isAdmin, accountsCtrl.getUser);
