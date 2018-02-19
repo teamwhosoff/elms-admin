@@ -16,7 +16,7 @@ module.exports.requested = (req, res, next) => {
         req.params.mailOptions = {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Manager.Email,
-            cc: leave.Owner.Email,
+            //cc: leave.Owner.Email,
             subject: "Who's Off - New Leave Request",
             html: content
         };
