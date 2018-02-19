@@ -13,6 +13,8 @@ module.exports = (req, res, next) => {
     var leaveId = req.params.leaveId;
     var otp = req.params.otp;
     var status = 0;
+    
+    var newOtp = crypto.randomBytes(64).toString('hex');
 
     switch (req.params.status) {
         case 'approve':
@@ -28,7 +30,7 @@ module.exports = (req, res, next) => {
 
     console.log(leaveId + " ---- " + status + " ----- " + otp);
     //, otp: getNewOTP(leaveId)
-    store.doc('eLeaves/' + leaveId).update({ "status": status }).then(result => {
+    store.doc('eLeaves/' + leaveId).update({ "status": status, "otp": newOtp, 'modifiedAt': new Date() }).then(result => {
         if (result != null) {
             store.doc('eLeaves/' + leaveId).get().then(leave => {
                 leave = leave.data();
