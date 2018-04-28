@@ -15,6 +15,7 @@ const
     leaveCtrl = require("./leave/leave-controller"),
     accountsCtrl = require("./accounts/user-accounts-controller"),
     teamsCtrl = require("./team/team-controller"),
+    notifyCtrl = require('./middleware/firebase-notification-trigger'),
     usersCtrl = require("./user/user-controller");
 
 const app = express();
@@ -26,10 +27,10 @@ app.get('/', homeCtrl);
 app.get('/success', (req, res) => { res.send("Success"); })
 app.get('/duringthistime', verifyIdToken, leaveCtrl.duringthistime);
 
-app.post('/email/trigger/requested', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.requested, mailDispatcher.dispatch, mailDispatcher.finish);
-app.post('/email/trigger/approved', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.approved, mailDispatcher.dispatch, mailDispatcher.finish);
-app.post('/email/trigger/declined', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher.dispatch, mailDispatcher.finish);
-app.post('/email/trigger/cancelled', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher.dispatch, mailDispatcher.finish);
+app.post('/email/trigger/requested', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.requested, mailDispatcher.dispatch, notifyCtrl.notifyManager, mailDispatcher.finish);
+app.post('/email/trigger/approved', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.approved, mailDispatcher.dispatch, notifyCtrl.notifyEmployee, mailDispatcher.finish);
+app.post('/email/trigger/declined', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher.dispatch, notifyCtrl.notifyEmployee, mailDispatcher.finish);
+app.post('/email/trigger/cancelled', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher.dispatch, notifyCtrl.notifyManager, mailDispatcher.finish);
 
 app.get('/leave/:leaveId/status/:status/otp/:otp', leaveOtpValidator, leaveStatusChangeCtrl, emailCtrl.admin, mailDispatcher.dispatchPage, mailDispatcher.adminFinish);
 
