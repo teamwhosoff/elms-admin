@@ -12,6 +12,8 @@ module.exports.notifyManager =(req, res) => {
         sourceUserID: leave.Owner.Email
     }
 
+    console.log(notification);
+
     store.collection('eNotifications').doc(notification.targetUserID)
         .collection('notifications').add(notification).then(result => {
             console.log('notification');
@@ -29,6 +31,8 @@ module.exports.notifyEmployee =(req, res) => {
         targetUserID: leave.Owner.Email,
         sourceUserID: leave.Owner.Manager.Email
     }
+
+    console.log(notification);
 
     store.collection('eNotifications').doc(notification.targetUserID)
         .collection('notifications').add(notification).then(result => {

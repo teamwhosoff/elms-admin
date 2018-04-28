@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-module.exports.dispatch = (req, res) => {
+module.exports.dispatch = (req, res, next) => {
 
     if (req.params.mailOptions) {
         //console.log(req.params.mailOptions);
@@ -21,15 +21,18 @@ module.exports.dispatch = (req, res) => {
             if (err) {
                 console.log(err);
                 res.status(500).send(err);
+                next();
             }
             else {
                 console.log(info);
                 res.status(200).send(info);
+                next();
             }
         });
     }
     else {
         console.log("Mail skipped");
+        next();
     }
 };
 
