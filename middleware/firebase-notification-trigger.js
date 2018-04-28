@@ -13,7 +13,11 @@ module.exports.notifyManager =(req, res, next) => {
     }
 
     store.collection('eNotifications').doc(notification.targetUserID)
-        .collection('notifications').add(notification);
+        .collection('notifications').add(notification).then(result => {
+            console.log('notification');
+            console.log(result);
+            next();
+          }).catch(err => { console.log(err); next(); });
 
 }
 
@@ -28,6 +32,10 @@ module.exports.notifyEmployee =(req, res, next) => {
     }
 
     store.collection('eNotifications').doc(notification.targetUserID)
-        .collection('notifications').add(notification);
+        .collection('notifications').add(notification).then(result => {
+            console.log('notification');
+            console.log(result);
+            next();
+          }).catch(err => { console.log(err); next(); });
     
 }
