@@ -1,8 +1,6 @@
 'use strict';
 const nodemailer = require('nodemailer');
 var path = require('path');
-var admin = require('firebase-admin');
-var store = admin.firestore();
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -26,29 +24,6 @@ module.exports.dispatch = (req, res) => {
             }
             else {
                 console.log(info);
-
-                try{
-                let leave = req.Leave;
-
-                let notification = {
-                    leaveId: req.query.leaveId,
-                    targetUserID: leave.Owner.Manager.Email,
-                    sourceUserID: leave.Owner.Email
-                }
-            
-                store.collection('eNotifications').doc(notification.targetUserID)
-                    .collection('notifications').add(notification).then(result => {
-                        console.log('notification');
-                        console.log(result);
-                        next();
-                      }).catch(err => { console.log(err); next(); });
-                    }
-                    catch(exc)
-                    {
-                        console.log('cactch bloack');
-                        console.log(exc);
-                    }
-
                 res.status(200).send(info);
             }
         });

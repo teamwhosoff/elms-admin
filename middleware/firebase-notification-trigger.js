@@ -2,7 +2,7 @@
 var admin = require('firebase-admin');
 var store = admin.firestore();
 
-module.exports.notifyManager =(req, res, next) => {
+module.exports.notifyManager =(req, res) => {
 
     let leave = req.Leave;
 
@@ -16,12 +16,11 @@ module.exports.notifyManager =(req, res, next) => {
         .collection('notifications').add(notification).then(result => {
             console.log('notification');
             console.log(result);
-            next();
-          }).catch(err => { console.log(err); next(); });
+          }).catch(err => { console.log(err); });
 
 }
 
-module.exports.notifyEmployee =(req, res, next) => {
+module.exports.notifyEmployee =(req, res) => {
 
     let leave = req.Leave;
 
@@ -35,7 +34,6 @@ module.exports.notifyEmployee =(req, res, next) => {
         .collection('notifications').add(notification).then(result => {
             console.log('notification');
             console.log(result);
-            next();
-          }).catch(err => { console.log(err); next(); });
+          }).catch(err => { console.log(err); });
     
 }
