@@ -36,7 +36,7 @@ module.exports.dispatch = (req, res, next) => {
     }
 };
 
-module.exports.dispatchPage = (req, res) => {
+module.exports.dispatchPage = (req, res, next) => {
 
     if (req.params.mailOptions) {
         //console.log(req.params.mailOptions);
@@ -44,10 +44,12 @@ module.exports.dispatchPage = (req, res) => {
             if (err) {
                 console.log(err);
                 res.status(500).send(err);
+                next();
             }
             else {
                 console.log(info);
                 res.render(path.resolve(__dirname,"../leave/templates/done.jade"));
+                next();
             }
         });
     }

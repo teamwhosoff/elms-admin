@@ -2,6 +2,23 @@
 var admin = require('firebase-admin');
 var store = admin.firestore();
 
+var clearNotification = (notification) => {
+    this.store.collection('eNotifications').doc(notification.sourceUserID)
+    .collection('notifications', ref => ref.where('leaveId', '==', notification.leaveId))
+    .snapshotChanges().subscribe((items) => {
+        items.forEach(item => {
+            // console.log(item);
+            item.payload.doc.ref.delete().then(() => {
+                this.getMyNotificationDetails();
+                console.log("Notification successfully deleted!");
+              }).catch(function(error) {
+                this.getMyNotificationDetails();
+                console.error("Error removing Notification: ", error);
+              });
+        })            
+    })
+}
+
 module.exports.notifyManager =(req, res) => {
 
     let leave = req.Leave;
@@ -12,6 +29,7 @@ module.exports.notifyManager =(req, res) => {
         sourceUserID: leave.Owner.Email
     }
 
+    clearNotification(notification);
     console.log(notification);
 
     store.collection('eNotifications').doc(notification.targetUserID)
@@ -32,6 +50,7 @@ module.exports.notifyEmployee =(req, res) => {
         sourceUserID: leave.Owner.Manager.Email
     }
 
+    clearNotification(notification);
     console.log(notification);
 
     store.collection('eNotifications').doc(notification.targetUserID)
@@ -41,3 +60,4 @@ module.exports.notifyEmployee =(req, res) => {
           }).catch(err => { console.log(err); });
     
 }
+
