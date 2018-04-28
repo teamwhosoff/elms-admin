@@ -1,6 +1,8 @@
 'use strict';
 const nodemailer = require('nodemailer');
 var path = require('path');
+var admin = require('firebase-admin');
+var store = admin.firestore();
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
