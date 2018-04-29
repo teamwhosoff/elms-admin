@@ -26,7 +26,7 @@ module.exports.clearNotification = (req, res, next) => {
 
 }
 
-addNewNotification = (notification) => {
+addNewNotification = (notification, next) => {
     store.collection('eNotifications/' + notification.sourceUserID + '/notifications')
         .where('leaveId', '==', notification.leaveId)
         .onSnapshot(querySnap => {
@@ -55,7 +55,7 @@ module.exports.notifyManager = (req, res, next) => {
     console.log(notification);
     req.managerNotification = notification;
 
-    addNewNotification(notification);
+    addNewNotification(notification, next);
 
 }
 
@@ -72,7 +72,7 @@ module.exports.notifyEmployee = (req, res, next) => {
     console.log(notification);
     req.employeeNotification = notification;
 
-    addNewNotification(notification);
+    addNewNotification(notification, next);
 
 }
 
