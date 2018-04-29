@@ -28,9 +28,9 @@ app.get('/success', (req, res) => { res.send("Success"); })
 app.get('/duringthistime', verifyIdToken, leaveCtrl.duringthistime);
 
 app.post('/email/trigger/requested', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.requested, mailDispatcher.dispatch, notifyCtrl.notifyManager, mailDispatcher.finish);
-app.post('/email/trigger/approved', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.approved, mailDispatcher.dispatch, notifyCtrl.notifyEmployee, mailDispatcher.finish);
-app.post('/email/trigger/declined', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher.dispatch, notifyCtrl.notifyEmployee, mailDispatcher.finish);
-app.post('/email/trigger/cancelled', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher.dispatch, notifyCtrl.notifyManager, mailDispatcher.finish);
+app.post('/email/trigger/approved', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.approved, mailDispatcher.dispatch, notifyCtrl.notifyEmployee, notifyCtrl.clearNotification, mailDispatcher.finish);
+app.post('/email/trigger/declined', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.declined, mailDispatcher.dispatch, notifyCtrl.notifyEmployee, notifyCtrl.clearNotification, mailDispatcher.finish);
+app.post('/email/trigger/cancelled', verifyIdToken, leaveCtrl.getLeaveByID, emailValidationCtrl.validate, emailCtrl.canceled, mailDispatcher.dispatch, notifyCtrl.notifyManager, notifyCtrl.clearNotification, mailDispatcher.finish);
 
 app.get('/leave/:leaveId/status/:status/otp/:otp', leaveOtpValidator, leaveStatusChangeCtrl, emailCtrl.admin, mailDispatcher.dispatchPage, notifyCtrl.notifyEmployee, mailDispatcher.adminFinish);
 
