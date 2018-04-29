@@ -27,19 +27,27 @@ module.exports.clearNotification = (req, res, next) => {
 }
 
 var addNewNotification = (notification, next) => {
-    store.collection('eNotifications/' + notification.sourceUserID + '/notifications')
-        .where('leaveId', '==', notification.leaveId)
-        .onSnapshot(querySnap => {
-            if(querySnap.empty)
-            {
-                store.collection('eNotifications').doc(notification.targetUserID)
-                .collection('notifications').add(notification).then(result => {
-                    console.log('notification');
-                    // console.log(result);
-                    next();
-                }).catch(err => { console.log(err); next(); });
-            }
-        }, err => { console.log(err); next(); })  
+
+    store.collection('eNotifications').doc(notification.targetUserID)
+    .collection('notifications').add(notification).then(result => {
+        console.log('notification');
+        // console.log(result);
+        next();
+    }).catch(err => { console.log(err); next(); });
+
+    // store.collection('eNotifications/' + notification.sourceUserID + '/notifications')
+    //     .where('leaveId', '==', notification.leaveId)
+    //     .onSnapshot(querySnap => {
+    //         if(querySnap.empty)
+    //         {
+    //             store.collection('eNotifications').doc(notification.targetUserID)
+    //             .collection('notifications').add(notification).then(result => {
+    //                 console.log('notification');
+    //                 // console.log(result);
+    //                 next();
+    //             }).catch(err => { console.log(err); next(); });
+    //         }
+    //     }, err => { console.log(err); next(); })  
 }
 
 module.exports.notifyManager = (req, res, next) => {
