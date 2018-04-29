@@ -26,6 +26,22 @@ module.exports.clearNotification = (req, res, next) => {
 
 }
 
+addNewNotification = (notification) => {
+    store.collection('eNotifications/' + notification.sourceUserID + '/notifications')
+        .where('leaveId', '==', notification.leaveId)
+        .onSnapshot(querySnap => {
+            if(querySnap.empty)
+            {
+                store.collection('eNotifications').doc(notification.targetUserID)
+                .collection('notifications').add(notification).then(result => {
+                    console.log('notification');
+                    // console.log(result);
+                    next();
+                }).catch(err => { console.log(err); next(); });
+            }
+        }, err => { console.log(err); next(); })  
+}
+
 module.exports.notifyManager = (req, res, next) => {
 
     let leave = req.Leave;
@@ -39,12 +55,7 @@ module.exports.notifyManager = (req, res, next) => {
     console.log(notification);
     req.managerNotification = notification;
 
-    store.collection('eNotifications').doc(notification.targetUserID)
-        .collection('notifications').add(notification).then(result => {
-            console.log('notification');
-            // console.log(result);
-            next();
-        }).catch(err => { console.log(err); next(); });
+    addNewNotification(notification);
 
 }
 
@@ -61,12 +72,7 @@ module.exports.notifyEmployee = (req, res, next) => {
     console.log(notification);
     req.employeeNotification = notification;
 
-    store.collection('eNotifications').doc(notification.targetUserID)
-        .collection('notifications').add(notification).then(result => {
-            console.log('notification');
-            // console.log(result);
-            next();
-        }).catch(err => { console.log(err); next(); });
+    addNewNotification(notification);
 
 }
 
