@@ -26,7 +26,7 @@ module.exports.clearNotification = (req, res, next) => {
 
 }
 
-addNewNotification = (notification, next) => {
+var addNewNotification = (notification, next) => {
     store.collection('eNotifications/' + notification.sourceUserID + '/notifications')
         .where('leaveId', '==', notification.leaveId)
         .onSnapshot(querySnap => {
