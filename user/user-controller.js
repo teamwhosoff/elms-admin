@@ -9,25 +9,28 @@ module.exports.import = (req, res) => {
         store.collection('eUsers').doc(user.email).set(user).then(result => {
             importedList.push(result);
             if (i == arr.length - 1) {
-                res.send(importedList);
+                console.log('basic insert count' + importedList.length);
+                importedList = []
+                users.forEach((user, i, arr) => {
+                if(user.manager) {
+                    user.manager = store.doc("/eUsers/" + user.manager).ref;
+                }
+                if(user.team) {
+                    user.team = store.doc("/eTeam/" + user.team).ref;
+                }
+                store.collection('eUsers').doc(user.email).set(user).then(result => {
+                    importedList.push(result);
+                    if (i == arr.length - 1) {
+                        console.log('reference update count' + importedList.length);
+                        res.send(importedList);
+                    }
+                }).catch(err => res.status(500).send(err))
+            })
             }
         }).catch(err => res.status(500).send(err))
     })
     
-//     users.forEach((user, i, arr) => {
-//         if(user.manager) {
-//             user.manager = store.doc("/eUsers/" + user.manager).ref;
-//         }
-//         if(user.team) {
-//             user.team = store.doc("/eTeam/" + user.team).ref;
-//         }
-//         store.collection('eUsers').doc(user.email).set(user).then(result => {
-//             importedList.push(result);
-//             if (i == arr.length - 1) {
-//                 res.send(importedList);
-//             }
-//         }).catch(err => res.status(500).send(err))
-//     })
+    
 }
 
 module.exports.export = (req, res) => {
