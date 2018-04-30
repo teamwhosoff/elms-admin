@@ -9,7 +9,7 @@ admin.initializeApp({
 
 module.exports = (req, res, next) => {
 
-    return next();
+//     return next();
 
     var idToken = req.headers['fb-user-token'];
     if (!idToken) {
