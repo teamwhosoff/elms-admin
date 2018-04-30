@@ -3,14 +3,9 @@ var store = admin.firestore();
 
 module.exports.import = (req, res) => {
     var users = req.body;
-    var importedList = []
+    var importedList = [];
+    
     users.forEach((user, i, arr) => {
-        if(user.manager) {
-            user.manager = store.doc("/eUsers/" + user.manager).ref;
-        }
-        if(user.team) {
-            user.team = store.doc("/eTeam/" + user.team).ref;
-        }
         store.collection('eUsers').doc(user.email).set(user).then(result => {
             importedList.push(result);
             if (i == arr.length - 1) {
@@ -18,6 +13,21 @@ module.exports.import = (req, res) => {
             }
         }).catch(err => res.status(500).send(err))
     })
+    
+//     users.forEach((user, i, arr) => {
+//         if(user.manager) {
+//             user.manager = store.doc("/eUsers/" + user.manager).ref;
+//         }
+//         if(user.team) {
+//             user.team = store.doc("/eTeam/" + user.team).ref;
+//         }
+//         store.collection('eUsers').doc(user.email).set(user).then(result => {
+//             importedList.push(result);
+//             if (i == arr.length - 1) {
+//                 res.send(importedList);
+//             }
+//         }).catch(err => res.status(500).send(err))
+//     })
 }
 
 module.exports.export = (req, res) => {
