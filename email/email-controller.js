@@ -112,7 +112,7 @@ module.exports.admin = (req, res, next) => {
         req.params.mailOptions = {
             from: process.env.GMAIL_ID,
             to: leave.Owner.Email,
-            cc: leave.Owner.Manager.Email,
+            //cc: leave.Owner.Manager.Email,
             subject: "WhosOff - Leave Request ",
             html: content
         };
